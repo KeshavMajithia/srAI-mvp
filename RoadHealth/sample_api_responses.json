@@ -1,0 +1,112 @@
+[
+  {
+    "grid_id": "grid_1",
+    "coordinates": {
+      "lat": 12.873242253930716,
+      "lng": 77.57330244833003
+    },
+    "prediction": {
+      "class": "satisfactory",
+      "confidence": 0.8954,
+      "all_probabilities": {
+        "good": 0.0967,
+        "poor": 0.0341,
+        "satisfactory": 0.8028,
+        "very_poor": 0.0664
+      }
+    },
+    "timestamp": "2025-06-22T12:00:00Z",
+    "model_info": {
+      "architecture": "ResNet50",
+      "accuracy": 97.43589743589743
+    }
+  },
+  {
+    "grid_id": "grid_2",
+    "coordinates": {
+      "lat": 12.873409576959938,
+      "lng": 77.62960514709528
+    },
+    "prediction": {
+      "class": "very_poor",
+      "confidence": 0.7123,
+      "all_probabilities": {
+        "good": 0.0768,
+        "poor": 0.075,
+        "satisfactory": 0.1157,
+        "very_poor": 0.7324
+      }
+    },
+    "timestamp": "2025-06-22T12:00:00Z",
+    "model_info": {
+      "architecture": "ResNet50",
+      "accuracy": 97.43589743589743
+    }
+  },
+  {
+    "grid_id": "grid_3",
+    "coordinates": {
+      "lat": 12.941826045193558,
+      "lng": 77.68461858487653
+    },
+    "prediction": {
+      "class": "satisfactory",
+      "confidence": 0.8741,
+      "all_probabilities": {
+        "good": 0.1091,
+        "poor": 0.1257,
+        "satisfactory": 0.6249,
+        "very_poor": 0.1403
+      }
+    },
+    "timestamp": "2025-06-22T12:00:00Z",
+    "model_info": {
+      "architecture": "ResNet50",
+      "accuracy": 97.43589743589743
+    }
+  },
+  {
+    "grid_id": "grid_4",
+    "coordinates": {
+      "lat": 12.880359753245225,
+      "lng": 77.53263916899628
+    },
+    "prediction": {
+      "class": "good",
+      "confidence": 0.9063,
+      "all_probabilities": {
+        "good": 0.5611,
+        "poor": 0.2084,
+        "satisfactory": 0.1181,
+        "very_poor": 0.1123
+      }
+    },
+    "timestamp": "2025-06-22T12:00:00Z",
+    "model_info": {
+      "architecture": "ResNet50",
+      "accuracy": 97.43589743589743
+    }
+  },
+  {
+    "grid_id": "grid_5",
+    "coordinates": {
+      "lat": 12.971947841890923,
+      "lng": 77.53432358098878
+    },
+    "prediction": {
+      "class": "poor",
+      "confidence": 0.8388,
+      "all_probabilities": {
+        "good": 0.0271,
+        "poor": 0.9025,
+        "satisfactory": 0.0569,
+        "very_poor": 0.0135
+      }
+    },
+    "timestamp": "2025-06-22T12:00:00Z",
+    "model_info": {
+      "architecture": "ResNet50",
+      "accuracy": 97.43589743589743
+    }
+  }
+]
