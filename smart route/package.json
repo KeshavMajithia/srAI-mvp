@@ -1,0 +1,6 @@
+{
+  "homepage": "https://keshavmajithia.github.io/smartroute-ai/",
+  "postbuild": "copy dist\\index.html dist\\404.html && echo > dist\\.nojekyll",
+  "predeploy": "npm run build && npm run postbuild",
+  "deploy": "gh-pages -d dist"
+} 
