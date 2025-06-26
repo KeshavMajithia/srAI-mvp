@@ -53,10 +53,10 @@ const Index = () => {
             <Sidebar isOpen={isSidebarOpen} />
           </div>
           
-          {/* Main content area */}
+          {/* Main content area - ensure it's above sidebar on desktop */}
           <main className={`flex-1 transition-all duration-300 overflow-hidden ${
             isSidebarOpen ? 'lg:ml-80' : 'ml-0'
-          } min-h-[calc(100vh-4rem)] relative z-0`}
+          } min-h-[calc(100vh-4rem)] relative z-0 lg:z-10`}
             style={{ minHeight: 'calc(100vh - 4rem)' }}
           >
             <MapComponent />
