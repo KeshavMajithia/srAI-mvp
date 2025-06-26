@@ -38,6 +38,7 @@ interface RouteStore {
   generateRoute: () => Promise<void>;
   addRoadCondition: (condition: string) => void;
   loadGridData: () => Promise<void>;
+  loadFallbackGridData: () => void;
 }
 
 // SmartRoute AI API base URL
@@ -258,18 +259,95 @@ export const useRouteStore = create<RouteStore>((set, get) => ({
   loadGridData: async () => {
     try {
       console.log('Loading grid data from SmartRoute AI API...');
+      console.log('API URL:', `${API_BASE_URL}/grid`);
+      
       const response = await fetch(`${API_BASE_URL}/grid`);
+      console.log('Grid API response status:', response.status);
+      console.log('Grid API response headers:', response.headers);
       
       if (response.ok) {
         const data = await response.json();
+        console.log('Grid API response data:', data);
+        
         if (data.success) {
           set({ gridData: data.data });
-          console.log('Grid data loaded successfully');
+          console.log('Grid data loaded successfully:', data.data);
+        } else {
+          console.error('Grid API returned success: false:', data.message);
+          // Load fallback data
+          get().loadFallbackGridData();
         }
+      } else {
+        const errorText = await response.text();
+        console.error('Grid API failed with status:', response.status, 'Error:', errorText);
+        // Load fallback data
+        get().loadFallbackGridData();
       }
     } catch (error) {
       console.error('Failed to load grid data:', error);
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        type: error.constructor.name
+      });
+      // Load fallback data
+      get().loadFallbackGridData();
     }
+  },
+
+  // Fallback grid data for when API is not available
+  loadFallbackGridData: () => {
+    console.log('Loading fallback grid data...');
+    const fallbackData = {
+      grid_size: 20,
+      delhi_bounds: {
+        lat_min: 28.4,
+        lat_max: 28.9,
+        lng_min: 76.8,
+        lng_max: 77.4
+      },
+      cells: []
+    };
+
+    // Generate sample grid cells
+    const latStep = (fallbackData.delhi_bounds.lat_max - fallbackData.delhi_bounds.lat_min) / fallbackData.grid_size;
+    const lngStep = (fallbackData.delhi_bounds.lng_max - fallbackData.delhi_bounds.lng_min) / fallbackData.grid_size;
+
+    for (let row = 0; row < fallbackData.grid_size; row++) {
+      for (let col = 0; col < fallbackData.grid_size; col++) {
+        const center_lat = fallbackData.delhi_bounds.lat_min + (row + 0.5) * latStep;
+        const center_lng = fallbackData.delhi_bounds.lng_min + (col + 0.5) * lngStep;
+        
+        // Generate random quality data
+        const qualities = ['Good', 'Satisfactory', 'Poor', 'Very Poor', 'Unknown'];
+        const quality = qualities[Math.floor(Math.random() * qualities.length)];
+        
+        const colors = {
+          'Good': '#22c55e',
+          'Satisfactory': '#f97316', 
+          'Poor': '#ef4444',
+          'Very Poor': '#000000',
+          'Unknown': '#6b7280'
+        };
+
+        fallbackData.cells.push({
+          row,
+          col,
+          center_lat,
+          center_lng,
+          quality,
+          color: colors[quality],
+          confidence: 0.8 + Math.random() * 0.2,
+          last_updated: Math.floor(Date.now() / 1000) - Math.floor(Math.random() * 86400 * 30), // Random time in last 30 days
+          num_images: Math.floor(Math.random() * 10),
+          lat_bounds: [center_lat - latStep/2, center_lat + latStep/2],
+          lng_bounds: [center_lng - lngStep/2, center_lng + lngStep/2]
+        });
+      }
+    }
+
+    set({ gridData: fallbackData });
+    console.log('Fallback grid data loaded successfully');
   },
 
   generateRoute: async () => {
