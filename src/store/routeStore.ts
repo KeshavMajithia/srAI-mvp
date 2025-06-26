@@ -41,7 +41,7 @@ interface RouteStore {
 }
 
 // SmartRoute AI API base URL
-const API_BASE_URL = 'http://localhost:8001';
+const API_BASE_URL = 'https://smartroute-ai.onrender.com';
 
 // Function to fetch route from SmartRoute AI API
 const fetchSmartRoute = async (start: [number, number], end: [number, number]): Promise<{
