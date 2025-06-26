@@ -212,7 +212,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       />
       <aside className={`
         fixed left-0 top-16 h-[calc(100vh-4rem)] w-80 bg-background border-r border-border
-        transform transition-transform duration-300 z-50 overflow-y-auto
+        transform transition-transform duration-300 z-50 lg:z-0 overflow-y-auto
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:relative lg:translate-x-0 lg:top-0 lg:h-full
         shadow-lg lg:shadow-none
