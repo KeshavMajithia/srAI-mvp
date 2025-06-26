@@ -9,7 +9,7 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "postbuild": "copy dist\\index.html dist\\404.html && echo. > dist\\.nojekyll",
+    "postbuild": "cp dist/index.html dist/404.html && touch dist/.nojekyll",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "preview": "vite preview"
