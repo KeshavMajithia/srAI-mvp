@@ -19,6 +19,12 @@ export const GridOverlay = ({ mapInstance }: GridOverlayProps) => {
   const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastCellKeyRef = useRef<string | null>(null);
 
+  // Debug logging
+  useEffect(() => {
+    console.log('GridOverlay: gridData changed:', gridData);
+    console.log('GridOverlay: gridCells changed:', gridCells);
+  }, [gridData, gridCells]);
+
   // --- Tooltip logic using map mousemove ---
   useEffect(() => {
     if (!mapInstance || !gridData) return;
