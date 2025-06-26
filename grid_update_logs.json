@@ -1,0 +1,362 @@
+[
+  {
+    "timestamp": "2025-06-25T19:59:58.184696",
+    "cell": "0,0",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.5,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-25T20:00:10.397388",
+    "cell": "0,0",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.4,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-25T20:29:08.995939",
+    "cell": "12,9",
+    "old_quality": "Very Poor",
+    "new_quality": "Poor",
+    "confidence": 0.6,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-25T20:49:43.422562",
+    "cell": "9,7",
+    "old_quality": "Very Poor",
+    "new_quality": "Poor",
+    "confidence": 0.6,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-25T20:56:19.800678",
+    "cell": "7,13",
+    "old_quality": "Very Poor",
+    "new_quality": "Very Poor",
+    "confidence": 0.5,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-25T21:36:43.991220",
+    "cell": "7,13",
+    "old_quality": "Very Poor",
+    "new_quality": "Poor",
+    "confidence": 0.6,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T08:17:01.387286",
+    "cell": "1,4",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9982666969299316,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T14:54:01.632361",
+    "cell": "1,4",
+    "old_quality": "Poor",
+    "new_quality": "Poor",
+    "confidence": 0.7854935526847839,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T14:54:17.652079",
+    "cell": "1,4",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9977730711301168,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T14:54:20.496784",
+    "cell": "1,4",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.997722327709198,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T14:54:22.152708",
+    "cell": "1,4",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9977489829063415,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:03:14.911152",
+    "cell": "1,4",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9792756736278534,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:03:57.069564",
+    "cell": "4,1",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8297881245613098,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:03:59.984836",
+    "cell": "4,1",
+    "old_quality": "Satisfactory",
+    "new_quality": "Good",
+    "confidence": 0.9297881245613098,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:04:01.325115",
+    "cell": "4,1",
+    "old_quality": "Satisfactory",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8954219619433085,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T15:04:28.717673",
+    "cell": "4,1",
+    "old_quality": "Satisfactory",
+    "new_quality": "Good",
+    "confidence": 1.0,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:04:30.287570",
+    "cell": "4,1",
+    "old_quality": "Satisfactory",
+    "new_quality": "Good",
+    "confidence": 1.0,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:04:31.727483",
+    "cell": "4,1",
+    "old_quality": "Satisfactory",
+    "new_quality": "Good",
+    "confidence": 1.0,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:04:33.644190",
+    "cell": "4,1",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9527385490281242,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T15:04:35.254114",
+    "cell": "4,1",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9582887664437294,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:27:59.295468",
+    "cell": "3,3",
+    "old_quality": "Very Poor",
+    "new_quality": "Poor",
+    "confidence": 1.0,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:28:12.570229",
+    "cell": "3,3",
+    "old_quality": "Poor",
+    "new_quality": "Satisfactory",
+    "confidence": 1.0,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:28:14.252798",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8981841047604879,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:28:15.457918",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8983264058828354,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:28:30.354435",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9984964370727539,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T16:35:55.705239",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9985554218292236,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T16:36:02.567564",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8985993589673724,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:36:08.287203",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8964388534426689,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:36:10.169966",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9966623187065125,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:36:11.614347",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9968894720077515,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:36:13.014439",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8969513654708863,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T16:36:14.090155",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9968508541584015,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T16:36:15.409689",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9968365848064422,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T17:30:20.748164",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8968462884426117,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T17:30:28.341113",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9968149304389954,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T17:30:30.141073",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9950614273548126,
+    "reason": "RL agent action: maintain"
+  },
+  {
+    "timestamp": "2025-06-26T17:30:31.966631",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8950685143470765,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T17:30:33.476282",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Good",
+    "confidence": 0.9968249320983886,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T17:30:35.991648",
+    "cell": "3,3",
+    "old_quality": "Good",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8967673659324646,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T19:23:35.399339",
+    "cell": "1,4",
+    "old_quality": "Poor",
+    "new_quality": "Satisfactory",
+    "confidence": 0.8854935526847839,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T21:14:29.005386",
+    "cell": "6,8",
+    "old_quality": "Very Poor",
+    "new_quality": "Poor",
+    "confidence": 1.0,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T22:05:01.014351",
+    "cell": "9,7",
+    "old_quality": "Very Poor",
+    "new_quality": "Poor",
+    "confidence": 0.9323373377323151,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T22:05:01.020447",
+    "cell": "2,8",
+    "old_quality": "Poor",
+    "new_quality": "Satisfactory",
+    "confidence": 0.9781534433364868,
+    "reason": "RL agent action: upgrade"
+  },
+  {
+    "timestamp": "2025-06-26T22:05:01.047821",
+    "cell": "3,9",
+    "old_quality": "Very Poor",
+    "new_quality": "Very Poor",
+    "confidence": 0.9844924807548523,
+    "reason": "RL agent action: downgrade"
+  },
+  {
+    "timestamp": "2025-06-26T22:05:01.073035",
+    "cell": "2,8",
+    "old_quality": "Satisfactory",
+    "new_quality": "Good",
+    "confidence": 1.0,
+    "reason": "RL agent action: upgrade"
+  }
+]

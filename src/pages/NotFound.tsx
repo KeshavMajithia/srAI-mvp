@@ -1,6 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
+// NOTE: The /admin page is intentionally not linked from anywhere in the main UI. Access it directly via /admin.
+
 const NotFound = () => {
   const location = useLocation();
 

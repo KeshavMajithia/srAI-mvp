@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { useRouteStore } from '@/store/routeStore';
 import { GridOverlay } from './GridOverlay';
+import { useTheme } from './ThemeProvider';
 
 export const MapComponent = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
   const routeLayerRef = useRef<any>(null);
+  const tileLayerRef = useRef<any>(null);
 
   const {
     startCoords,
@@ -19,6 +21,8 @@ export const MapComponent = () => {
     setSelecting,
     loadGridData
   } = useRouteStore();
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -44,31 +48,45 @@ export const MapComponent = () => {
           zoomControl: true,
           attributionControl: true
         });
+      }
 
-        // Add CartoDB Positron tiles
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      // Remove previous tile layer if exists
+      if (tileLayerRef.current) {
+        mapInstanceRef.current.removeLayer(tileLayerRef.current);
+        tileLayerRef.current = null;
+      }
+
+      // Add tile layer based on theme
+      if (theme === 'dark') {
+        tileLayerRef.current = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
           subdomains: 'abcd',
           maxZoom: 20
         }).addTo(mapInstanceRef.current);
-
-        // Add click handler
-        mapInstanceRef.current.on('click', (e: any) => {
-          const { lat, lng } = e.latlng;
-          
-          if (isSelecting === 'start') {
-            setStartCoords([lat, lng]);
-            // Automatically switch to end location selection
-            setSelecting('end');
-          } else if (isSelecting === 'end') {
-            setEndCoords([lat, lng]);
-            setSelecting(null);
-          }
-        });
-
-        // Load grid data on map initialization
-        loadGridData();
+      } else {
+        tileLayerRef.current = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          subdomains: 'abcd',
+          maxZoom: 20
+        }).addTo(mapInstanceRef.current);
       }
+
+      // Add click handler
+      mapInstanceRef.current.on('click', (e: any) => {
+        const { lat, lng } = e.latlng;
+        
+        if (isSelecting === 'start') {
+          setStartCoords([lat, lng]);
+          // Automatically switch to end location selection
+          setSelecting('end');
+        } else if (isSelecting === 'end') {
+          setEndCoords([lat, lng]);
+          setSelecting(null);
+        }
+      });
+
+      // Load grid data on map initialization
+      loadGridData();
 
       // Clear existing markers
       markersRef.current.forEach(marker => {
@@ -179,7 +197,7 @@ export const MapComponent = () => {
         mapInstanceRef.current = null;
       }
     };
-  }, [startCoords, endCoords, isSelecting, routeCoords, roadConditions, setStartCoords, setEndCoords, setSelecting, loadGridData]);
+  }, [startCoords, endCoords, isSelecting, routeCoords, roadConditions, setStartCoords, setEndCoords, setSelecting, loadGridData, theme]);
 
   return (
     <div className="relative w-full h-full">

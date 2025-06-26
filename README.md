@@ -1,73 +1,147 @@
-# Welcome to your Lovable project
+# SmartRoute AI
 
-## Project info
+SmartRoute AI is an MVP for intelligent, road health-aware route planning. It combines a Flask backend (Python) with a modern React frontend (TypeScript, Vite, Tailwind, shadcn-ui) to deliver:
+- Real-time route planning and visualization
+- Road quality analytics and evidence collection
+- Reinforcement learning agents for grid and routing updates
+- Mobile-friendly, dark mode-enabled UI
 
-**URL**: https://lovable.dev/projects/92d49b65-ae3c-4984-bc6b-5097786292bf
+---
 
-## How can I edit this code?
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Backend (Flask API)](#backend-flask-api)
+- [Frontend (React App)](#frontend-react-app)
+- [State Management](#state-management)
+- [Key Features](#key-features)
+- [Setup & Development](#setup--development)
+- [Deployment](#deployment)
+- [Custom Domain](#custom-domain)
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## Project Overview
+SmartRoute AI divides the Delhi NCR region into a grid, predicts road quality for each cell, and allows users to:
+- Plan routes that avoid poor-quality roads
+- Upload images as evidence to improve road quality predictions
+- Give feedback on routes, which is used to improve the RL agents
+- View a color-coded map and interact with the grid
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/92d49b65-ae3c-4984-bc6b-5097786292bf) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## Backend (Flask API)
+- **Grid Initialization:**
+  - Loads or generates a 20x20 grid for Delhi NCR, with each cell assigned a road quality (Good, Satisfactory, Poor, Very Poor, Unknown).
+  - Uses a model-based script to predict initial qualities, and updates as new evidence arrives.
+- **Endpoints:**
+  - `/grid`: Returns the current grid with all cell data.
+  - `/route`: Returns a route between two coordinates, optimizing for road quality.
+  - `/route/rl`: Uses a reinforcement learning agent for route planning.
+  - `/upload-image`: Accepts image uploads, runs model prediction, and updates the grid/evidence logs.
+  - `/feedback`: Accepts user feedback on routes, updates logs and agents.
+  - `/logs/*`: Returns logs for routes, feedback, grid updates, and cross-agent events.
+  - `/monitor/rl-agent` and `/monitor/rl-feedback`: Returns RL agent performance and feedback stats.
+  - `/evidence/analytics` and `/feedback/analytics`: Returns analytics for evidence and feedback.
+- **RL Agents:**
+  - Grid update agent: Decides when/how to update cell qualities based on evidence and feedback.
+  - Routing agent: Learns to plan routes that maximize good road segments and user satisfaction.
+- **Data Storage:**
+  - Uses JSON files for logs, grid state, and evidence.
+  - Uploaded images are stored in `uploaded_images/`.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Frontend (React App)
+- **Map View:**
+  - Interactive map (Leaflet) with color-coded grid overlay.
+  - Start/end pin selection by tapping/clicking the map.
+  - Route visualization with segments colored by road quality.
+  - Fully responsive and mobile-friendly.
+  - Dark mode support (map tiles and UI adapt to theme).
+- **Sidebar:**
+  - Route planning controls (select start/end, generate/reset route).
+  - Road analysis: Upload images for AI-based road quality prediction.
+  - Route summary: Distance, duration, quality score, and breakdown.
+  - RL route summary and feedback (thumbs up/down for route quality).
+  - Analytics: Shows RL agent stats and feedback trends.
+  - On mobile, the sidebar acts as a drawer overlaying the map.
+- **Header:**
+  - App branding and title.
+  - Sidebar toggle (always visible on mobile).
+  - Theme toggle (light/dark mode).
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## State Management
+- Uses [Zustand](https://github.com/pmndrs/zustand) for global state:
+  - Stores start/end coordinates, route data, grid data, and UI state.
+  - Handles async actions for route generation, grid loading, and feedback.
+  - Ensures state is synced between map, sidebar, and overlays.
 
+---
+
+## Key Features
+- **Grid-based Road Health:**
+  - Each cell in the grid is colored by predicted road quality.
+  - Hover/click on cells to see details (confidence, last updated, evidence count).
+- **Route Planning:**
+  - Click/tap to select start and end points.
+  - Route is calculated to avoid poor/very poor roads when possible.
+  - RL agent can be used for advanced route planning.
+- **Evidence Collection:**
+  - Upload images for any grid cell; backend predicts quality and updates the grid.
+  - Evidence is logged and used to improve model predictions.
+- **User Feedback:**
+  - After a route is generated, users can give positive/negative feedback.
+  - Feedback is logged and used to train RL agents and update grid cells.
+- **Analytics:**
+  - View RL agent performance, feedback trends, and evidence stats in the sidebar.
+- **Mobile & Dark Mode:**
+  - Fully responsive layout; sidebar becomes a drawer on mobile.
+  - Map and UI adapt to dark mode instantly.
+
+---
+
+## Setup & Development
+
+### Prerequisites
+- Node.js & npm (for frontend)
+- Python 3.x (for backend)
+- (Optional) PyTorch and model weights for advanced grid prediction
+
+### Frontend
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+cd <project_root>
+npm install
 npm run dev
 ```
+- Visit `http://localhost:5173` (or as shown in your terminal)
 
-**Edit a file directly in GitHub**
+### Backend
+```sh
+cd <project_root>
+python api_server.py
+```
+- Backend runs on `http://localhost:8001`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Model/Evidence
+- Place model weights in `RoadHealth/` as needed.
+- Upload images via the sidebar to generate evidence and update the grid.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Deployment
+- Build the frontend with `npm run build` and serve the `dist/` folder.
+- Deploy the backend (Flask app) to your preferred server or cloud platform.
+- Set up CORS and environment variables as needed for production.
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Custom Domain
+- You can connect a custom domain using your hosting provider's instructions.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/92d49b65-ae3c-4984-bc6b-5097786292bf) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Credits
+- Developed as an MVP for intelligent, road health-aware routing.
+- Combines open-source geospatial, ML, and UI technologies.

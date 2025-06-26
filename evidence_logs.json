@@ -1,0 +1,233 @@
+[
+  {
+    "cell": "1,4",
+    "image_filename": "good_082.jpg",
+    "prediction": "good",
+    "confidence": 0.9982666969299316,
+    "timestamp": "2025-06-26T08:17:01.382600"
+  },
+  {
+    "cell": "1,4",
+    "image_filename": "good_033.JPG",
+    "prediction": "good",
+    "confidence": 0.9975684285163879,
+    "timestamp": "2025-06-26T14:54:01.609006+00:00"
+  },
+  {
+    "cell": "1,4",
+    "image_filename": "good_027.JPG",
+    "prediction": "good",
+    "confidence": 0.9974840879440308,
+    "timestamp": "2025-06-26T14:54:17.627609+00:00"
+  },
+  {
+    "cell": "1,4",
+    "image_filename": "good_054.JPG",
+    "prediction": "good",
+    "confidence": 0.9975700974464417,
+    "timestamp": "2025-06-26T14:54:20.475728+00:00"
+  },
+  {
+    "cell": "1,4",
+    "image_filename": "good_071.JPG",
+    "prediction": "good",
+    "confidence": 0.9978556036949158,
+    "timestamp": "2025-06-26T14:54:22.126061+00:00"
+  },
+  {
+    "cell": "1,4",
+    "image_filename": "satis_013.jpg",
+    "prediction": "satisfactory",
+    "confidence": 0.8869091272354126,
+    "timestamp": "2025-06-26T15:03:14.907003+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "satis_002.jpg",
+    "prediction": "satisfactory",
+    "confidence": 0.7716098427772522,
+    "timestamp": "2025-06-26T15:03:57.065783+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "satis_009.jpg",
+    "prediction": "satisfactory",
+    "confidence": 0.9767990708351135,
+    "timestamp": "2025-06-26T15:03:59.957212+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "satis_029.jpg",
+    "prediction": "satisfactory",
+    "confidence": 0.9378569722175598,
+    "timestamp": "2025-06-26T15:04:01.301884+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "good_033.JPG",
+    "prediction": "good",
+    "confidence": 0.9975684285163879,
+    "timestamp": "2025-06-26T15:04:28.686884+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "good_062.JPG",
+    "prediction": "good",
+    "confidence": 0.9990870952606201,
+    "timestamp": "2025-06-26T15:04:30.267623+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "good_089.JPG",
+    "prediction": "good",
+    "confidence": 0.9909529685974121,
+    "timestamp": "2025-06-26T15:04:31.696392+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "good_112.JPG",
+    "prediction": "good",
+    "confidence": 0.9952954649925232,
+    "timestamp": "2025-06-26T15:04:33.617333+00:00"
+  },
+  {
+    "cell": "4,1",
+    "image_filename": "good_204.JPG",
+    "prediction": "good",
+    "confidence": 0.9971402883529663,
+    "timestamp": "2025-06-26T15:04:35.226815+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_146.JPG",
+    "prediction": "good",
+    "confidence": 0.9982605576515198,
+    "timestamp": "2025-06-26T16:27:59.284116+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_007.JPG",
+    "prediction": "good",
+    "confidence": 0.9988794922828674,
+    "timestamp": "2025-06-26T16:28:12.559401+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_043.JPG",
+    "prediction": "good",
+    "confidence": 0.9974122643470764,
+    "timestamp": "2025-06-26T16:28:14.241391+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_066.JPG",
+    "prediction": "good",
+    "confidence": 0.9987533092498779,
+    "timestamp": "2025-06-26T16:28:15.445505+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "verypoor_007.jpg",
+    "prediction": "very_poor",
+    "confidence": 0.999176561832428,
+    "timestamp": "2025-06-26T16:28:30.351137+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_001.JPG",
+    "prediction": "good",
+    "confidence": 0.9988503456115723,
+    "timestamp": "2025-06-26T16:35:55.701981+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_002.JPG",
+    "prediction": "good",
+    "confidence": 0.9988629817962646,
+    "timestamp": "2025-06-26T16:36:02.553867+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_003.JPG",
+    "prediction": "good",
+    "confidence": 0.9813153147697449,
+    "timestamp": "2025-06-26T16:36:08.273363+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_004.JPG",
+    "prediction": "good",
+    "confidence": 0.9984500408172607,
+    "timestamp": "2025-06-26T16:36:10.158580+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_006.JPG",
+    "prediction": "good",
+    "confidence": 0.9989338517189026,
+    "timestamp": "2025-06-26T16:36:11.602150+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_007.JPG",
+    "prediction": "good",
+    "confidence": 0.9988794922828674,
+    "timestamp": "2025-06-26T16:36:13.000341+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_008.JPG",
+    "prediction": "good",
+    "confidence": 0.99787437915802,
+    "timestamp": "2025-06-26T16:36:14.073543+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_009.JPG",
+    "prediction": "good",
+    "confidence": 0.9972695708274841,
+    "timestamp": "2025-06-26T16:36:15.395284+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_001.JPG",
+    "prediction": "good",
+    "confidence": 0.9988503456115723,
+    "timestamp": "2025-06-26T17:30:20.736726+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_002.JPG",
+    "prediction": "good",
+    "confidence": 0.9988629817962646,
+    "timestamp": "2025-06-26T17:30:28.317928+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_003.JPG",
+    "prediction": "good",
+    "confidence": 0.9813153147697449,
+    "timestamp": "2025-06-26T17:30:30.112185+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_006.JPG",
+    "prediction": "good",
+    "confidence": 0.9989338517189026,
+    "timestamp": "2025-06-26T17:30:31.945906+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_007.JPG",
+    "prediction": "good",
+    "confidence": 0.9988794922828674,
+    "timestamp": "2025-06-26T17:30:33.451134+00:00"
+  },
+  {
+    "cell": "3,3",
+    "image_filename": "good_008.JPG",
+    "prediction": "good",
+    "confidence": 0.99787437915802,
+    "timestamp": "2025-06-26T17:30:35.965043+00:00"
+  }
+]
