@@ -55,7 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       formData.append('image', file);
       formData.append('cell', cell);
       try {
-        const response = await fetch('http://localhost:8001/upload-image', {
+        const response = await fetch('https://smartroute-ai.onrender.com/upload-image', {
           method: 'POST',
           body: formData
         });
@@ -117,7 +117,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       });
       return;
     }
-    const response = await fetch("http://localhost:8001/route/rl", {
+    const response = await fetch("https://smartroute-ai.onrender.com/route/rl", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -134,7 +134,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const handleFeedback = async (type: 'positive' | 'negative') => {
     if (!rlRouteResult || !rlRouteResult.route_coordinates) return;
     setFeedbackLoading(true);
-    const response = await fetch("http://localhost:8001/feedback", {
+    const response = await fetch("https://smartroute-ai.onrender.com/feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -156,9 +156,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   // Fetch RL agent overall stats and feedback stats on mount and every 10s
   useEffect(() => {
     const fetchStats = async () => {
-      const rlRes = await fetch("http://localhost:8001/monitor/rl-agent");
+      const rlRes = await fetch("https://smartroute-ai.onrender.com/monitor/rl-agent");
       setRlOverallStats(await rlRes.json());
-      const fbRes = await fetch("http://localhost:8001/monitor/rl-feedback");
+      const fbRes = await fetch("https://smartroute-ai.onrender.com/monitor/rl-feedback");
       setRlFeedbackStats(await fbRes.json());
     };
     fetchStats();
@@ -175,7 +175,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   useEffect(() => {
     const fetchRLRoute = async () => {
       if (!startCoords || !endCoords) return;
-      const response = await fetch("http://localhost:8001/route/rl", {
+      const response = await fetch("https://smartroute-ai.onrender.com/route/rl", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -196,14 +196,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Mobile overlay - only on mobile devices */}
       <div
-        className={`fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity duration-300 lg:hidden ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
         style={{ display: isOpen ? 'block' : 'none' }}
         onClick={() => {
-          // Optionally, you can pass a close handler prop to Sidebar
+          // Close sidebar on mobile overlay click
           if (typeof window !== 'undefined' && window.innerWidth < 1024) {
-            // Try to close sidebar if on mobile
             const event = new CustomEvent('closeSidebar');
             window.dispatchEvent(event);
           }
@@ -213,10 +214,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
         fixed left-0 top-16 h-[calc(100vh-4rem)] w-80 bg-background border-r border-border
         transform transition-transform duration-300 z-50 overflow-y-auto
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        lg:translate-x-0
-        shadow-lg
+        lg:relative lg:translate-x-0 lg:top-0 lg:h-full
+        shadow-lg lg:shadow-none
       `}>
-        {/* Mobile close button */}
+        {/* Mobile close button - only visible on mobile */}
         <button
           className="absolute top-2 right-2 z-50 p-2 rounded-full bg-background border border-border shadow-lg lg:hidden"
           style={{ display: isOpen ? 'block' : 'none' }}

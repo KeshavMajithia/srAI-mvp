@@ -44,12 +44,16 @@ const Index = () => {
         />
         
         <div className="flex flex-1 relative overflow-hidden">
-          {/* Sidebar and overlay must be above the map on mobile, but only when open */}
-          {isSidebarOpen && (
-            <div className="absolute inset-0 z-50 lg:static lg:z-auto">
-              <Sidebar isOpen={isSidebarOpen} />
-            </div>
-          )}
+          {/* Sidebar - positioned properly for both mobile and desktop */}
+          <div className={`${
+            isSidebarOpen 
+              ? 'fixed inset-0 z-50 lg:static lg:z-auto lg:w-80' 
+              : 'hidden lg:block lg:w-80'
+          }`}>
+            <Sidebar isOpen={isSidebarOpen} />
+          </div>
+          
+          {/* Main content area */}
           <main className={`flex-1 transition-all duration-300 overflow-hidden ${
             isSidebarOpen ? 'lg:ml-80' : 'ml-0'
           } min-h-[calc(100vh-4rem)] relative z-0`}
