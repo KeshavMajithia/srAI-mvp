@@ -51,7 +51,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       formData.append('image', file);
       formData.append('cell', cell);
       try {
-        const response = await fetch('http://localhost:8001/upload-image', {
+        const response = await fetch('https://smartroute-ai-1092755191929.europe-west1.run.app/upload-image', {
           method: 'POST',
           body: formData
         });
@@ -114,7 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       });
       return;
     }
-    const response = await fetch("http://localhost:8001/route/rl", {
+    const response = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/route/rl", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -131,7 +131,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const handleFeedback = async (type: 'positive' | 'negative') => {
     if (!rlRouteResult || !rlRouteResult.route_coordinates) return;
     setFeedbackLoading(true);
-    const response = await fetch("http://localhost:8001/feedback", {
+    const response = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -153,9 +153,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   // Fetch RL agent overall stats and feedback stats on mount and every 10s
   useEffect(() => {
     const fetchStats = async () => {
-      const rlRes = await fetch("http://localhost:8001/monitor/rl-agent");
+      const rlRes = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/monitor/rl-agent");
       setRlOverallStats(await rlRes.json());
-      const fbRes = await fetch("http://localhost:8001/monitor/rl-feedback");
+      const fbRes = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/monitor/rl-feedback");
       setRlFeedbackStats(await fbRes.json());
     };
     fetchStats();
@@ -172,7 +172,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   useEffect(() => {
     const fetchRLRoute = async () => {
       if (!startCoords || !endCoords) return;
-      const response = await fetch("http://localhost:8001/route/rl", {
+      const response = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/route/rl", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
