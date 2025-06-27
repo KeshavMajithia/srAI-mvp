@@ -1,4 +1,6 @@
 gunicorn
+flask
+flask-cors
 numpy>=1.21.0
 requests>=2.25.0
 matplotlib>=3.5.0
