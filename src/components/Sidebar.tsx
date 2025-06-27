@@ -31,22 +31,60 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const [feedbackLoading, setFeedbackLoading] = useState(false);
   const [rlOverallStats, setRlOverallStats] = useState<any>(null);
   const [rlFeedbackStats, setRlFeedbackStats] = useState<any>(null);
+  const [imageCellMap, setImageCellMap] = useState<{ [filename: string]: string }>({});
+  const [imageResults, setImageResults] = useState<{
+    filename: string;
+    cell: string;
+    prediction: string;
+    confidence: number;
+  }[]>([]);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     setUploadedImages(prev => [...prev, ...files]);
-    
-    // Simulate road condition analysis
-    files.forEach((file, index) => {
-      const conditions = ['Good', 'Satisfactory', 'Poor', 'Very Poor'];
-      const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
-      addRoadCondition(randomCondition);
-    });
-    
-    toast({
-      title: "Images Analyzed",
-      description: `${files.length} road condition(s) detected`,
-    });
+    for (const file of files) {
+      let cell = prompt(`Enter grid cell for image ${file.name} (format: row,col):`, "0,0");
+      if (!cell) cell = "0,0";
+      setImageCellMap(prev => ({ ...prev, [file.name]: cell }));
+      // Upload to backend
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('cell', cell);
+      try {
+        const response = await fetch('http://localhost:8001/upload-image', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        if (data.success) {
+          setImageResults(prev => [
+            ...prev,
+            {
+              filename: file.name,
+              cell: cell,
+              prediction: data.prediction,
+              confidence: data.confidence
+            }
+          ]);
+          toast({
+            title: `Image ${file.name} analyzed`,
+            description: `Prediction: ${data.prediction} (Confidence: ${(data.confidence * 100).toFixed(1)}%)`,
+          });
+        } else {
+          toast({
+            title: `Image ${file.name} failed`,
+            description: data.message || 'Upload failed',
+            variant: 'destructive',
+          });
+        }
+      } catch (err) {
+        toast({
+          title: `Image ${file.name} failed`,
+          description: 'Network or server error',
+          variant: 'destructive',
+        });
+      }
+    }
   };
 
   const handleGenerateRoute = async () => {
@@ -274,20 +312,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                 <p className="text-sm font-medium mb-2">
                   Uploaded: {uploadedImages.length} image(s)
                 </p>
-                <div className="flex flex-wrap gap-1">
-                  {roadConditions.map((condition, index) => (
-                    <Badge
-                      key={index}
-                      variant={
-                        condition === 'Good' ? 'default' :
-                        condition === 'Satisfactory' ? 'secondary' :
-                        'destructive'
-                      }
-                    >
-                      {condition}
-                    </Badge>
-                  ))}
-                </div>
+                {/* Show image results with cell and prediction */}
+                {imageResults.length > 0 && (
+                  <div className="mt-2 space-y-1">
+                    {imageResults.map((result, idx) => (
+                      <div key={idx} className="text-xs bg-muted rounded px-2 py-1">
+                        <span className="font-medium">{result.filename}</span> @ <span>{result.cell}</span>: <span>{result.prediction}</span> (<span>{(result.confidence * 100).toFixed(1)}%</span>)
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
