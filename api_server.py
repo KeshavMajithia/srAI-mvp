@@ -594,6 +594,9 @@ def update_grid_cell_with_agent(cell_key):
     old_quality = cell['quality']
     old_confidence = cell['confidence']
     action, new_cell = grid_update_agent.act_on_cell(cell)
+    # Ensure color is always updated to match new quality
+    quality_colors = {'Good': '#22c55e', 'Satisfactory': '#f97316', 'Poor': '#ef4444', 'Very Poor': '#8b4513', 'Unknown': '#6b7280'}
+    new_cell['color'] = quality_colors.get(new_cell['quality'], '#6b7280')
     # Simulate reward: +1 if confidence increases, -1 if decreases
     reward = 1 if new_cell['confidence'] > old_confidence else -1
     grid_update_agent.train_on_feedback(cell, action, reward, new_cell)
@@ -1178,7 +1181,7 @@ def admin_cell_detail(cell_ui_key):
     })
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Default to 10000 if PORT not set
+    port = int(os.environ.get("PORT", 8001))  # Default to 8001 if PORT not set
     app.run(host="0.0.0.0", port=port)
 
 # For production deployment
