@@ -1,39 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MapComponent } from "@/components/MapComponent";
 import { Sidebar } from "@/components/Sidebar";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Link } from 'react-router-dom';
 
 // NOTE: The /admin page is intentionally not linked from anywhere in the main UI. Access it directly via /admin.
 
 const Index = () => {
-  // Sidebar closed by default on mobile
-  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth >= 1024; // lg breakpoint
-    }
-    return true;
-  });
-
-  // Update sidebar state on resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setIsSidebarOpen(false);
-      } else {
-        setIsSidebarOpen(true);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    // Listen for custom closeSidebar event
-    const handleCloseSidebar = () => setIsSidebarOpen(false);
-    window.addEventListener('closeSidebar', handleCloseSidebar);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('closeSidebar', handleCloseSidebar);
-    };
-  }, []);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
     <ThemeProvider>
@@ -44,21 +18,11 @@ const Index = () => {
         />
         
         <div className="flex flex-1 relative overflow-hidden">
-          {/* Sidebar - positioned properly for both mobile and desktop */}
-          <div className={`${
-            isSidebarOpen 
-              ? 'fixed inset-0 z-50 lg:static lg:z-auto lg:w-80' 
-              : 'hidden lg:block lg:w-80'
-          }`}>
-            <Sidebar isOpen={isSidebarOpen} />
-          </div>
+          <Sidebar isOpen={isSidebarOpen} />
           
-          {/* Main content area - ensure it's above sidebar on desktop */}
           <main className={`flex-1 transition-all duration-300 overflow-hidden ${
             isSidebarOpen ? 'lg:ml-80' : 'ml-0'
-          } min-h-[calc(100vh-4rem)] relative z-0 lg:z-10`}
-            style={{ minHeight: 'calc(100vh - 4rem)' }}
-          >
+          }`}>
             <MapComponent />
           </main>
         </div>
