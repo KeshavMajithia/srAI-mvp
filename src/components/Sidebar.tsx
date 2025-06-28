@@ -11,6 +11,8 @@ interface SidebarProps {
   isOpen: boolean;
 }
 
+const API_BASE_URL = 'https://smartroute-ai-1092755191929.europe-west1.run.app';
+
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const {
     startCoords,
@@ -38,24 +40,47 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
     prediction: string;
     confidence: number;
   }[]>([]);
+  const [uploadingImages, setUploadingImages] = useState<Set<string>>(new Set());
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
+    if (files.length === 0) return;
+    
+    // Clear the file input to allow re-uploading the same files
+    event.target.value = '';
+    
     setUploadedImages(prev => [...prev, ...files]);
+    
+    // Process each file sequentially to avoid race conditions
     for (const file of files) {
       let cell = prompt(`Enter grid cell for image ${file.name} (format: row,col):`, "0,0");
       if (!cell) cell = "0,0";
+      
       setImageCellMap(prev => ({ ...prev, [file.name]: cell }));
+      
+      // Add to uploading set
+      setUploadingImages(prev => new Set(prev).add(file.name));
+      
       // Upload to backend
       const formData = new FormData();
       formData.append('image', file);
       formData.append('cell', cell);
+      
       try {
-        const response = await fetch('https://smartroute-ai-1092755191929.europe-west1.run.app/upload-image', {
+        console.log(`Uploading ${file.name} to cell ${cell}...`);
+        
+        const response = await fetch(`${API_BASE_URL}/upload-image`, {
           method: 'POST',
           body: formData
         });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log(`Response for ${file.name}:`, data);
+        
         if (data.success) {
           setImageResults(prev => [
             ...prev,
@@ -66,11 +91,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
               confidence: data.confidence
             }
           ]);
+          
           toast({
             title: `Image ${file.name} analyzed`,
             description: `Prediction: ${data.prediction} (Confidence: ${(data.confidence * 100).toFixed(1)}%)`,
           });
         } else {
+          console.error(`Upload failed for ${file.name}:`, data.message);
           toast({
             title: `Image ${file.name} failed`,
             description: data.message || 'Upload failed',
@@ -78,10 +105,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
           });
         }
       } catch (err) {
+        console.error(`Error uploading ${file.name}:`, err);
         toast({
           title: `Image ${file.name} failed`,
-          description: 'Network or server error',
+          description: err instanceof Error ? err.message : 'Network or server error',
           variant: 'destructive',
+        });
+      } finally {
+        // Remove from uploading set
+        setUploadingImages(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(file.name);
+          return newSet;
         });
       }
     }
@@ -114,7 +149,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       });
       return;
     }
-    const response = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/route/rl", {
+    const response = await fetch(`${API_BASE_URL}/route/rl`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -131,7 +166,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const handleFeedback = async (type: 'positive' | 'negative') => {
     if (!rlRouteResult || !rlRouteResult.route_coordinates) return;
     setFeedbackLoading(true);
-    const response = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/feedback", {
+    const response = await fetch(`${API_BASE_URL}/feedback`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -153,9 +188,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   // Fetch RL agent overall stats and feedback stats on mount and every 10s
   useEffect(() => {
     const fetchStats = async () => {
-      const rlRes = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/monitor/rl-agent");
+      const rlRes = await fetch(`${API_BASE_URL}/monitor/rl-agent`);
       setRlOverallStats(await rlRes.json());
-      const fbRes = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/monitor/rl-feedback");
+      const fbRes = await fetch(`${API_BASE_URL}/monitor/rl-feedback`);
       setRlFeedbackStats(await fbRes.json());
     };
     fetchStats();
@@ -172,7 +207,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   useEffect(() => {
     const fetchRLRoute = async () => {
       if (!startCoords || !endCoords) return;
-      const response = await fetch("https://smartroute-ai-1092755191929.europe-west1.run.app/route/rl", {
+      const response = await fetch(`${API_BASE_URL}/route/rl`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -309,17 +344,58 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
 
             {uploadedImages.length > 0 && (
               <div>
-                <p className="text-sm font-medium mb-2">
-                  Uploaded: {uploadedImages.length} image(s)
-                </p>
+                <div className="flex justify-between items-center mb-2">
+                  <p className="text-sm font-medium">
+                    Uploaded: {uploadedImages.length} image(s)
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setUploadedImages([]);
+                      setImageResults([]);
+                      setImageCellMap({});
+                      setUploadingImages(new Set());
+                    }}
+                    className="text-xs"
+                  >
+                    Clear All
+                  </Button>
+                </div>
+                
                 {/* Show image results with cell and prediction */}
                 {imageResults.length > 0 && (
-                  <div className="mt-2 space-y-1">
+                  <div className="mt-2 space-y-1 max-h-40 overflow-y-auto">
                     {imageResults.map((result, idx) => (
-                      <div key={idx} className="text-xs bg-muted rounded px-2 py-1">
-                        <span className="font-medium">{result.filename}</span> @ <span>{result.cell}</span>: <span>{result.prediction}</span> (<span>{(result.confidence * 100).toFixed(1)}%</span>)
+                      <div key={idx} className="text-xs bg-muted rounded px-2 py-1 border">
+                        <div className="font-medium text-primary">{result.filename}</div>
+                        <div className="text-muted-foreground">
+                          Cell: {result.cell} | {result.prediction} ({(result.confidence * 100).toFixed(1)}%)
+                        </div>
                       </div>
                     ))}
+                  </div>
+                )}
+                
+                {/* Show currently uploading images */}
+                {uploadingImages.size > 0 && (
+                  <div className="mt-2 space-y-1">
+                    {Array.from(uploadingImages).map((filename, idx) => (
+                      <div key={idx} className="text-xs bg-blue-50 dark:bg-blue-950 rounded px-2 py-1 border border-blue-200 dark:border-blue-800">
+                        <div className="font-medium text-blue-700 dark:text-blue-300">{filename}</div>
+                        <div className="text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                          <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                          Processing...
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Show pending uploads */}
+                {imageResults.length < uploadedImages.length && uploadingImages.size === 0 && (
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    Processing {uploadedImages.length - imageResults.length} image(s)...
                   </div>
                 )}
               </div>
