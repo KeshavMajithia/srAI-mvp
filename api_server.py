@@ -594,7 +594,7 @@ def update_grid_cell_with_agent(cell_key):
     old_quality = cell['quality']
     old_confidence = cell['confidence']
     action, new_cell = grid_update_agent.act_on_cell(cell)
-    # Ensure color is always updated to match new quality
+    # Ensure color is always updated to match new quality using consistent mapping
     quality_colors = {'Good': '#22c55e', 'Satisfactory': '#f97316', 'Poor': '#ef4444', 'Very Poor': '#8b4513', 'Unknown': '#6b7280'}
     new_cell['color'] = quality_colors.get(new_cell['quality'], '#6b7280')
     # Simulate reward: +1 if confidence increases, -1 if decreases
@@ -791,11 +791,20 @@ def upload_image():
         cell = request.form.get('cell')  # e.g., '3,5'
         if not cell:
             return jsonify({'success': False, 'message': 'No cell location provided'}), 400
+        
+        print(f"Processing image upload: {image.filename} for cell {cell}")
+        
         filename = secure_filename(image.filename)
         save_path = os.path.join(UPLOAD_FOLDER, filename)
         image.save(save_path)
+        
+        print(f"Image saved to: {save_path}")
+        
         # Run model prediction
         pred_class, conf, all_probs = predict_image(save_path)
+        
+        print(f"Model prediction: {pred_class} with confidence {conf}")
+        
         evidence_entry = {
             'cell': cell.replace(' ', ''),
             'image_filename': filename,
@@ -803,6 +812,9 @@ def upload_image():
             'confidence': conf,
             'timestamp': datetime.datetime.now(datetime.UTC).isoformat()
         }
+        
+        print(f"Evidence entry created: {evidence_entry}")
+        
         # Log evidence
         try:
             if os.path.exists(EVIDENCE_LOG_FILE):
@@ -813,8 +825,10 @@ def upload_image():
             logs.append(evidence_entry)
             with open(EVIDENCE_LOG_FILE, 'w') as f:
                 json.dump(logs, f, indent=2)
+            print(f"Evidence logged successfully. Total evidence entries: {len(logs)}")
         except Exception as e:
             print(f"Failed to log evidence: {e}")
+        
         # Aggregate evidence for this cell
         cell_key = cell.replace(' ', '')
         cell_evidence = [e for e in logs if e['cell'].replace(' ', '') == cell_key]
@@ -826,12 +840,19 @@ def upload_image():
         avg_conf = sum(confidences) / len(confidences) if confidences else 0.0
         # Only update if at least 3 recent predictions agree and avg confidence > 0.7
         should_update = (count >= 3 and avg_conf > 0.7)
+        
+        print(f"Cell evidence analysis: {len(cell_evidence)} total, {len(recent_evidence)} recent, should_update: {should_update}")
+        
         if cell_key in grid:
             grid_cell = grid[cell_key]
             old_quality = grid_cell['quality']
             old_confidence = grid_cell['confidence']
             if should_update:
-                grid_cell['quality'] = most_common_pred.capitalize() if most_common_pred else grid_cell['quality']
+                # Properly map model prediction to quality value
+                if most_common_pred in label_map:
+                    grid_cell['quality'] = label_map[most_common_pred][0]
+                else:
+                    grid_cell['quality'] = most_common_pred.capitalize() if most_common_pred else grid_cell['quality']
                 grid_cell['confidence'] = avg_conf
                 grid_cell['last_updated'] = evidence_entry['timestamp']
                 grid_cell['num_images'] = len(cell_evidence)
@@ -847,7 +868,8 @@ def upload_image():
                     json.dump({k: v for k, v in grid.items()}, f, indent=2)
             except Exception as e:
                 print(f"Failed to save updated grid: {e}")
-            return jsonify({
+            
+            response_data = {
                 'success': True,
                 'prediction': pred_class,
                 'confidence': conf,
@@ -863,8 +885,12 @@ def upload_image():
                     'avg_confidence': avg_conf,
                     'should_update': should_update
                 }
-            })
+            }
+            
+            print(f"Returning successful response for {filename}: {response_data}")
+            return jsonify(response_data)
         else:
+            print(f"Cell {cell} not found in grid")
             return jsonify({'success': False, 'message': f'Cell {cell} not found in grid'}), 400
     except Exception as e:
         print(f"Error in upload_image endpoint: {e}")
